@@ -24,14 +24,14 @@ jobs:
       run: |
         rm -rf /tmp/WLEDtemp/* || true
         mkdir -p /tmp/WLEDtemp
-        wget https://github.com/moonmodules/WLED/archive/refs/heads/mdev.zip -O /tmp/WLEDtemp/mm.zip
+        wget https://github.com/Aircoookie/WLED/archive/refs/heads/main.zip -O /tmp/WLEDtemp/mm.zip
         unzip /tmp/WLEDtemp/mm.zip -d /tmp/WLEDtemp
         find /tmp/WLEDtemp -maxdepth 1 -mindepth 1 -name "*" -type d >> /tmp/WLEDtemp/wledfoldername
         cd `cat /tmp/WLEDtemp/wledfoldername`
         npm install
         echo '[env:custom_build]' >>platformio.ini
-        echo 'extends = env:esp32s3dev_8MB_PSRAM_qspi' >>platformio.ini
-        echo 'build_flags = ${env:esp32s3dev_8MB_PSRAM_qspi.build_flags} -D WLED_DISABLE_ESPNOW -D WLED_AP_SSID_UNIQUE -D WLED_ENABLE_MQTT -D LEDPIN=42 -D BTNPIN=5 -D DEFAULT_LED_COUNT=24 -D ABL_MILLIAMPS_DEFAULT=495 -D USERMOD_AUTO_SAVE' >>platformio.ini
+        echo 'extends = env:esp32s3dev_8MB_PSRAM_opi' >>platformio.ini
+        echo 'build_flags = ${env:esp32s3dev_8MB_PSRAM_opi.build_flags} -D WLED_AP_SSID_UNIQUE -D LEDPIN=42 -D BTNPIN=5 -D DEFAULT_LED_COUNT=24 -D ABL_MILLIAMPS_DEFAULT=500' >>platformio.ini
         
         echo 'build_unflags= -D WLED_RELEASE_NAME' >>platformio.ini
         pio run -e custom_build || pio run -e custom_build
